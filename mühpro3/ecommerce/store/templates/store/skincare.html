@@ -1,0 +1,96 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+    <div class="row">
+        <!-- Kategori Filtreleme Bölümü -->
+        <div class="col-lg-3">
+            <h5>Kategoriler</h5>
+            <div class="list-group">
+                <a href="{% url 'skincare' %}" class="list-group-item list-group-item-action">Tüm Ürünler</a>
+                {% for category in categories %}
+                <a href="?category={{ category.id }}" class="list-group-item list-group-item-action">{{ category.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Ürün Listeleme Bölümü -->
+        <div class="col-lg-9">
+            <div class="row">
+                {% for skincarepro in skincarepros %}
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100">
+                        {% if  skincarepro.image %}
+                        <img class="card-img-top" src="{{ skincarepro.image.url }}" alt="{{ skincarepro.name }}">
+                        {% else %}
+                        <img class="card-img-top" src="{% static 'images/placeholder.png' %}" alt="Placeholder">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ skincarepro.name }}</h5>
+                            <p class="card-text">{{ skincarepro.price|floatformat:2 }} TL</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button data-product="{{  skincarepro.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart thin-button">Sepete Ekle</button>
+                            <a class="btn btn-outline-success thin-button" href="{% url 'product_detail'  skincarepro.id %}">Görüntüle</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .list-group {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .list-group-item {
+            border: none;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .list-group-item:last-child {
+            border-bottom: none;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-img-top {
+            max-height: 300px;
+            object-fit: cover;
+        }
+
+        .card-footer {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card-footer .btn {
+            flex: 1;
+            margin: 5px;
+        }
+
+        .card-footer .btn-outline-secondary {
+            margin-right: 10px;
+        }
+
+        .thin-button {
+            padding: 5px 10px; /* Butonun içindeki boşlukları azaltır */
+            font-size: 12px;   /* Buton içeriğinin boyutunu küçültür */
+            line-height: 1.5;  /* Buton içeriğinin satır yüksekliğini ayarlar */
+        }
+    </style>
+{% endblock content %}
+

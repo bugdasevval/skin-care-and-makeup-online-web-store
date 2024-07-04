@@ -1,0 +1,37 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-6">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+            {% else %}
+            <img src="{% static 'images/placeholder.png' %}" class="img-fluid" alt="Placeholder">
+            {% endif %}
+        </div>
+        <div class="col-lg-6">
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.description }}</p> <!-- Ürün açıklaması eklemek isterseniz -->
+            <p>{{ product.price|floatformat:2 }} TL</p>
+           
+            <button data-product="{{ product.id }}" data-action="add" class="btn btn-primary update-cart" style="background-color: #4f868c;">Sepete Ekle</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        
+    }
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+
+    }
+</style>
+{% endblock content %}
+
